@@ -24,7 +24,6 @@ int main()
     pop.sortByFitness();
     printPopulation(pop, 18);
 
-    uniform_int_distribution<int> rPop(0, 99);
     uniform_int_distribution<int> survRand(0, POP_SIZE/2);
     for(int generation = 1;; generation++)
     {
