@@ -29,7 +29,7 @@ int main()
     {
         vector<Individual> newPopulation;
 
-        for(int i = 0; i < POP_SIZE; i++)
+        for(int i = 0; i < POP_SIZE-1; i++)
         {
             // Crossover
             int parent1 = survRand(e1);
@@ -37,7 +37,7 @@ int main()
             Individual newIndiv =
                     Evolution::crossover(pop.getIndividual(parent1),
                                          pop.getIndividual(parent2));
-
+            // Mutation
             uniform_int_distribution<int> r(1, 100);
             if(r(e1) <= 50)
                 Evolution::mutate(newIndiv);
@@ -48,10 +48,9 @@ int main()
         Individual indiv = pop.individuals.front();
         // Replace new population
         pop.individuals = newPopulation;
-        // Best individual from previous generation replaces an
-        // individual in the new generation. Not the best way to
-        // implement elitism = 1
-        pop.individuals.front() = indiv;
+        // Best individual from previous generation is added
+        // to the new generation (elitism = 1)
+        pop.individuals.push_back(indiv);
 
         Evolution::calculateFitness(pop);
         pop.sortByFitness();
